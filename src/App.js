@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import datos from "./data";
+import Navbar from "./routes/Navbar/Navbar";
+import Home from "./routes/Home/Home";
+import Newcard from "./routes/NewCard/NewCard";
+import { useContext } from "react";
+import { CardContext } from "./contexts/CardContext";
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
+import { useEffect } from "react";
 
 function App() {
+  const { setCards } = useContext(CardContext);
+
+  useEffect(() => {
+    setCards(datos);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route>
+          <Route path="/" element={<Navbar title={"Ciudades del mundo"} />}>
+            <Route index element={<Home />} />
+            <Route path="/New-Card" element={<Newcard />} />
+          </Route>
+        </Route>
+      </Routes>
     </div>
   );
 }
